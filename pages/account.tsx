@@ -31,10 +31,10 @@ const Account: NextPage = () => {
       setFiat(bal);
     };
     // getEthBalance("");
-    // const user_id = localStorage.getItem("user_id");
-    // if (user_id) {
-    //   getBalance(user_id);
-    // }
+    const user_id = localStorage.getItem("user_id");
+    if (user_id) {
+      getBalance(user_id);
+    }
     const check = localStorage.getItem("wallet_key");
     console.log(check);
     if (check) {

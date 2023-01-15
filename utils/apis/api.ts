@@ -64,7 +64,11 @@ const getTransLogsAPI = async (user_id: string) => {
 
 const getBalanceAPI = async (user_id: string) => {
   try {
-    const res = await axios.get(BACKEND_ROOT_URL + "/balances/" + user_id);
+    const res = await axios.get(BACKEND_ROOT_URL + "/balances/" + user_id, {
+      params: {
+        currency: "eth",
+      },
+    });
     return res.data;
   } catch (err) {
     console.log(err);
