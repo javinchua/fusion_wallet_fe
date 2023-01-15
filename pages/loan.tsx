@@ -1,13 +1,35 @@
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { Button, Card, Grid, Text } from "@nextui-org/react";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "../components";
 import { CurrencyInput } from "../components/CurrencyInput";
+import { getBalanceAPI } from "../utils/apis/api";
 
 const Loan: NextPage = () => {
   const [depositAmount, setDepositAmount] = useState(0);
   const [collateralAmount, setCollateralAmount] = useState(0);
+  const [ethBalance, setEthBalance] = useState(0);
+
+  useEffect(() => {
+    const getEthBalance = async () => {
+      const user_id = localStorage.getItem("user_id");
+      if (user_id) {
+        const bal = await getBalanceAPI(user_id, "eth");
+        setEthBalance(bal);
+      }
+    };
+    getEthBalance();
+  }, []);
+
+  useEffect(() => {
+    setCollateralAmount(depositAmount / 1000);
+  }, [depositAmount]);
+
+  useEffect(() => {
+    setDepositAmount(collateralAmount * 1000);
+  }, [collateralAmount]);
+
   return (
     <Layout>
       <div className="mt-8 text-center">
@@ -39,6 +61,7 @@ const Loan: NextPage = () => {
                 type="fiat"
                 amount={depositAmount}
                 setAmount={setDepositAmount}
+                balance={0}
               />
             </Grid>
             <Grid xs={2} justify="center" alignItems="flex-end">
@@ -50,6 +73,7 @@ const Loan: NextPage = () => {
                 type="crypto"
                 amount={collateralAmount}
                 setAmount={setCollateralAmount}
+                balance={ethBalance}
               />
             </Grid>
             <Grid justify="center">

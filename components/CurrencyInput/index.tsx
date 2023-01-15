@@ -7,6 +7,7 @@ interface CurrencyInputProps {
   type: "fiat" | "crypto";
   amount: number;
   setAmount: Dispatch<SetStateAction<number>>;
+  balance: number;
 }
 
 const currencyList = { fiat: ["SGD", "RIEL"], crypto: ["ETH", "USDC"] };
@@ -41,6 +42,7 @@ export const CurrencyInput = (props: CurrencyInputProps) => {
       label={props.label}
       value={props.amount !== 0 ? props.amount : ""}
       onChange={(e) => props.setAmount(parseFloat(e.target.value))}
+      helperText={`Balance: ${props.balance}`}
     />
   );
 };
