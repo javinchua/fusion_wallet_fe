@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
-import { Button } from "../components";
+import { Button, Layout } from "../components";
 import { getBalanceAPI } from "../utils/apis/create";
 import { MenuDropdown } from "../components";
 import RecipientDetails from "../components/recipientDetails";
 import { COIN_GECKO_URL } from "../utils/constants/apiEndpoints";
 import Image from "next/image";
-const Transfer: NextPage = () => {
+const Account: NextPage = () => {
   const [eth, setEth] = useState<number>(0);
   //   useEffect(() => {
   //     // import the Web3 library
@@ -54,7 +54,7 @@ const Transfer: NextPage = () => {
     fetchEthPrice();
   }, []);
   return (
-    <>
+    <Layout>
       {step == 0 ? (
         <RecipientDetails
           targetUser={targetUser}
@@ -114,8 +114,8 @@ const Transfer: NextPage = () => {
           </div>
         </div>
       )}
-    </>
+    </Layout>
   );
 };
 
-export default Transfer;
+export default Account;

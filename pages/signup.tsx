@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { NextPage } from "next";
 import { signupAPI } from "../utils/apis/create";
+import { Layout } from "../components";
+import { Button, Card, Input } from "@nextui-org/react";
 
 export interface SignUp {
   username: string;
@@ -34,86 +36,87 @@ const Signup: NextPage = () => {
       password: signupDetails.password,
     });
   };
+
   return (
-    <div className="flex flex-col min-h-screen bg-grey-lighter">
-      <div className="container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto">
-        <div className="w-full px-6 py-8 text-black bg-white rounded shadow-md">
+    <Layout>
+      <Card
+        css={{
+          mw: "400px",
+          marginTop: "4rem",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Card.Body>
           <form
-            className=""
+            className="px-4 py-4"
             onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
             <h1 className="mb-8 text-3xl text-center">Sign up</h1>
-            <input
+            <Input
               type="text"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
+              className="mb-4"
+              fullWidth
               name="username"
               placeholder="Username"
               value={signupDetails.username}
               onChange={handleChange}
             />
-            <input
+            <Input
               type="text"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
+              className="mb-4"
+              fullWidth
               name="email"
               placeholder="Email"
               value={signupDetails.email}
               onChange={handleChange}
             />
-            <input
+            <Input
               type="text"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
+              className="mb-4"
+              fullWidth
               name="firstName"
               placeholder="First Name"
               value={signupDetails.firstName}
               onChange={handleChange}
             />
-            <input
+            <Input
               type="text"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
+              className="mb-4"
+              fullWidth
               name="lastName"
               placeholder="Last Name"
               value={signupDetails.lastName}
               onChange={handleChange}
             />
-            <input
-              type="password"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
+            <Input
+              type="text"
+              className="mb-4"
+              fullWidth
               name="password"
               placeholder="Password"
               value={signupDetails.password}
               onChange={handleChange}
             />
-            <input
-              type="password"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
+            <Input
+              type="text"
+              className="mb-4"
+              fullWidth
               name="confirmPass"
               placeholder="Confirm Password"
               value={signupDetails.confirmPass}
               onChange={handleChange}
             />
-            <button
-              type="submit"
-              className="w-full py-3 my-1 text-center text-white bg-green-600 rounded hover:bg-green-dark focus:outline-none"
-            >
-              Create Account
-            </button>
-          </form>
-        </div>
 
-        <div className="mt-6 text-grey-dark">
-          Already have an account?
-          <a
-            className="ml-2 text-blue-400 no-underline border-b border-blue-400"
-            href="../login/"
-          >
-            Log in
-          </a>
-          .
-        </div>
-      </div>
-    </div>
+            <Button type="submit" css={{ width: "100%" }}>
+              Create Account
+            </Button>
+          </form>
+        </Card.Body>
+      </Card>
+    </Layout>
   );
 };
 
