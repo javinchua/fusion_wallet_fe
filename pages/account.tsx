@@ -2,36 +2,47 @@ import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 import { Button, Layout } from "../components";
-import { getBalanceAPI } from "../utils/apis/create";
+import { getBalanceAPI } from "../utils/apis/api";
 import { MenuDropdown } from "../components";
 import RecipientDetails from "../components/recipientDetails";
 import { COIN_GECKO_URL } from "../utils/constants/apiEndpoints";
 import Image from "next/image";
 const Account: NextPage = () => {
   const [eth, setEth] = useState<number>(0);
-  //   useEffect(() => {
-  //     // import the Web3 library
-  //     const Web3 = require("web3");
+  const [wallet, setWallet] = useState();
+  useEffect(() => {
+    // import the Web3 library
+    // const Web3 = require("web3");
 
-  //     // URL of the blockchain network
-  //     var url = "your-infura-URL"; // replace with your Infura URL (mainnet, test nets, select one from your infura.io dashboard)
+    // // URL of the blockchain network
+    // var url = "your-infura-URL"; // replace with your Infura URL (mainnet, test nets, select one from your infura.io dashboard)
 
-  //     // create the connection
-  //     var web3 = new Web3(url);
+    // // create the connection
+    // var web3 = new Web3(url);
 
-  //     // simple function that prints to the console the ETH balance, uses web3.utils to convert from WEI to ETH
-  //     async function getEthBalance(address: string) {
-  //       await web3.eth.getBalance(address, (err: any, balance: any) => {
-  //         setEth(web3.utils.fromWei(balance));
-  //       });
-  //     }
-  //     const getBalance = async (user_id: string) => {
-  //       const bal = await getBalanceAPI(user_id);
-  //       setFiat(bal);
-  //     };
-  //     getEthBalance("");
-  //     getBalance("");
-  //   }, []);
+    // simple function that prints to the console the ETH balance, uses web3.utils to convert from WEI to ETH
+    // async function getEthBalance(address: string) {
+    //   await web3.eth.getBalance(address, (err: any, balance: any) => {
+    //     setEth(web3.utils.fromWei(balance));
+    //   });
+    // }
+    const getBalance = async (user_id: string) => {
+      const bal = await getBalanceAPI(user_id);
+      setFiat(bal);
+    };
+    // getEthBalance("");
+    // const user_id = localStorage.getItem("user_id");
+    // if (user_id) {
+    //   getBalance(user_id);
+    // }
+    const check = localStorage.getItem("wallet_key");
+    console.log(check);
+    if (check) {
+      const wallet_id = JSON.parse(check).publicKey;
+      console.log(wallet_id);
+      setWallet(wallet_id);
+    }
+  }, []);
 
   const [fiat, setFiat] = useState<number>(0);
   const [value, setValue] = useState<number>(0);
@@ -54,7 +65,7 @@ const Account: NextPage = () => {
     fetchEthPrice();
   }, []);
   return (
-    <Layout>
+    <Layout wallet_id={wallet}>
       {step == 0 ? (
         <RecipientDetails
           targetUser={targetUser}

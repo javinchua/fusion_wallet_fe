@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 import { Button } from "../components";
-import { createWalletAPI } from "../utils/apis/create";
+import { createWalletAPI } from "../utils/apis/api";
 import Router from "next/router";
 
 const createWallet: NextPage = () => {
@@ -11,6 +11,8 @@ const createWallet: NextPage = () => {
     const user_id = localStorage.getItem("user_id");
     if (user_id) {
       const res = await createWalletAPI(user_id);
+      console.log(res.data);
+      localStorage.setItem("wallet_key", JSON.stringify(res.data));
       Router.push("/transfer");
     }
   };

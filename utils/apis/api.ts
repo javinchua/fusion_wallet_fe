@@ -11,6 +11,7 @@ export interface SignUp {
 const signupAPI = async (data: SignUp) => {
   try {
     const res = await axios.post(BACKEND_ROOT_URL + "/users/create", data);
+    localStorage.setItem("user_id", res.data.id);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -22,6 +23,8 @@ const createWalletAPI = async (user_id: string) => {
     const res = await axios.post(
       BACKEND_ROOT_URL + "/wallets/create/" + user_id
     );
+    console.log(JSON.stringify(res.data));
+    localStorage.setItem("wallet_key", JSON.stringify(res.data));
     return res.data;
   } catch (err) {
     console.log(err);
@@ -61,7 +64,28 @@ const getTransLogsAPI = async (user_id: string) => {
 
 const getBalanceAPI = async (user_id: string) => {
   try {
-    const res = await axios.get(BACKEND_ROOT_URL + "/balance/" + user_id);
+    const res = await axios.get(BACKEND_ROOT_URL + "/balances/" + user_id);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const transferAPI = async (
+  sender_id: string,
+  receiver_id: string,
+  amount: number
+) => {
+  try {
+    const res = await axios.post(
+      BACKEND_ROOT_URL +
+        `/transfer?from_user_id=${sender_id}&to_user_id=${receiver_id}/`,
+      {
+        type: "transfer",
+        amount: amount,
+        Date: Date.now(),
+      }
+    );
     return res.data;
   } catch (err) {
     console.log(err);
@@ -74,4 +98,5 @@ export {
   retrieveCryptoPricesAPI,
   getTransLogsAPI,
   getBalanceAPI,
+  transferAPI,
 };

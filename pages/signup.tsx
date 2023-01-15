@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { NextPage } from "next";
-import { signupAPI } from "../utils/apis/create";
+import { signupAPI, createWalletAPI } from "../utils/apis/api";
 import { Layout } from "../components";
 import { Button, Card, Input } from "@nextui-org/react";
-
+import Router from "next/router";
 export interface SignUp {
   username: string;
   email: string;
@@ -26,17 +26,25 @@ const Signup: NextPage = () => {
     const { value, name } = e.target;
     setSignupDetails((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    signupAPI({
+    await signupAPI({
       username: signupDetails.username,
       email: signupDetails.email,
       firstName: signupDetails.firstName,
       lastName: signupDetails.lastName,
       password: signupDetails.password,
     });
+    await createWalletCall();
   };
-
+  const createWalletCall = async () => {
+    // calling backend to create wallet
+    const user_id = localStorage.getItem("user_id");
+    if (user_id) {
+      const res = await createWalletAPI(user_id);
+      Router.push("/account");
+    }
+  };
   return (
     <Layout>
       <Card
@@ -92,7 +100,7 @@ const Signup: NextPage = () => {
               onChange={handleChange}
             />
             <Input
-              type="text"
+              type="password"
               className="mb-4"
               fullWidth
               name="password"
@@ -101,7 +109,7 @@ const Signup: NextPage = () => {
               onChange={handleChange}
             />
             <Input
-              type="text"
+              type="password"
               className="mb-4"
               fullWidth
               name="confirmPass"

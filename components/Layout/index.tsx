@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   children: ReactNode;
+  wallet_id?: string;
   // showWalletOptions: boolean;
   // setShowWalletOptions: (showWalletOptions: boolean) => void;
 }
@@ -81,7 +82,7 @@ export default function Layout(props: Props) {
           {pathname !== "/" && pathname !== "/signup" && (
             <>
               <Navbar.Link isActive={pathname == "/account"} href="/account">
-                Account
+                Account: {props.wallet_id}
               </Navbar.Link>
               <Navbar.Link isActive={pathname == "/loans"} href="/loans">
                 Loans
