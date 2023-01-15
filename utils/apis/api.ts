@@ -79,7 +79,7 @@ const transferAPI = async (
   try {
     const res = await axios.post(
       BACKEND_ROOT_URL +
-        `/transfer?from_user_id=${sender_id}&to_user_id=${receiver_id}/`,
+        `/transactions/transfer?from_user_id=${sender_id}&to_user_id=${receiver_id}`,
       {
         type: "transfer",
         amount: amount,

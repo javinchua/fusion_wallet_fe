@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 import { Button, Layout } from "../components";
-import { getBalanceAPI } from "../utils/apis/api";
+import { getBalanceAPI, transferAPI } from "../utils/apis/api";
 import { MenuDropdown } from "../components";
 import RecipientDetails from "../components/recipientDetails";
 import { COIN_GECKO_URL } from "../utils/constants/apiEndpoints";
@@ -64,6 +64,12 @@ const Account: NextPage = () => {
   useEffect(() => {
     fetchEthPrice();
   }, []);
+  const handleTransfer = () => {
+    const user = localStorage.getItem("user_id");
+    if (user && targetUser) {
+      transferAPI(user, targetUser, value);
+    }
+  };
   return (
     <Layout wallet_id={wallet}>
       {step == 0 ? (
@@ -120,7 +126,9 @@ const Account: NextPage = () => {
                 value={value}
                 onChange={handleChange}
               />
-              <Button loading={false}>Transfer</Button>
+              <Button loading={false} onClick={handleTransfer}>
+                Transfer
+              </Button>
             </div>
           </div>
         </div>
