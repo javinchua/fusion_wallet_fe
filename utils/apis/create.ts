@@ -10,7 +10,7 @@ export interface SignUp {
 }
 const signupAPI = async (data: SignUp) => {
   try {
-    const res = await axios.post(BACKEND_ROOT_URL + "/createBankAcc", data);
+    const res = await axios.post(BACKEND_ROOT_URL + "/users/create", data);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -19,7 +19,9 @@ const signupAPI = async (data: SignUp) => {
 
 const createWalletAPI = async (user_id: string) => {
   try {
-    const res = await axios.post(BACKEND_ROOT_URL + "/createWebAcc/" + user_id);
+    const res = await axios.post(
+      BACKEND_ROOT_URL + "/wallets/create/" + user_id
+    );
     return res.data;
   } catch (err) {
     console.log(err);
@@ -28,7 +30,9 @@ const createWalletAPI = async (user_id: string) => {
 //return public key
 const getWalletAPI = async (user_id: string) => {
   try {
-    const res = await axios.get(BACKEND_ROOT_URL + "/wallets/" + user_id);
+    const res = await axios.get(
+      BACKEND_ROOT_URL + "/wallets/retrieve/" + user_id
+    );
     return res.data;
   } catch (err) {
     console.log(err);
@@ -37,7 +41,9 @@ const getWalletAPI = async (user_id: string) => {
 
 const retrieveCryptoPricesAPI = async () => {
   try {
-    const res = await axios.post(BACKEND_ROOT_URL + "/retrieveCryptoPrices");
+    const res = await axios.post(
+      BACKEND_ROOT_URL + "/transactions/cryptoPrices/"
+    );
     return res.data;
   } catch (err) {
     console.log(err);

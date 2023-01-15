@@ -2,15 +2,24 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 import { Button } from "../components";
+import { createWalletAPI } from "../utils/apis/create";
+import Router from "next/router";
 
 const createWallet: NextPage = () => {
-  const createWalletCall = () => {
+  const createWalletCall = async () => {
     // calling backend to create wallet
+    const user_id = localStorage.getItem("user_id");
+    if (user_id) {
+      const res = await createWalletAPI(user_id);
+      Router.push("/transfer");
+    }
   };
   return (
     <div className="grid h-screen place-items-center">
       <div className="grid place-items-center">
-        <Button loading={false}>Create Wallet</Button>
+        <Button loading={false} onClick={createWalletCall}>
+          Create Wallet
+        </Button>
       </div>
     </div>
   );
