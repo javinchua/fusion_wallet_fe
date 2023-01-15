@@ -42,10 +42,10 @@ const getWalletAPI = async (user_id: string) => {
   }
 };
 
-const retrieveCryptoPricesAPI = async () => {
+const retrieveCryptoPricesAPI = async (token_id: string) => {
   try {
     const res = await axios.post(
-      BACKEND_ROOT_URL + "/transactions/cryptoPrices/"
+      BACKEND_ROOT_URL + "/transactions/cryptoPrices/" + token_id
     );
     return res.data;
   } catch (err) {
