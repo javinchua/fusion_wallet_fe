@@ -71,7 +71,7 @@ export const CurrencyInput = (props: CurrencyInputProps) => {
         type="number"
         contentRight={<CurrencyDropdown />}
         label={props.label}
-        value={props.amount !== 0 ? props.amount.toFixed(2) : ""}
+        value={props.amount !== 0 ? props.amount : ""}
         onChange={(e) => props.setAmount(parseFloat(e.target.value))}
       />
       {props.output ? null : (

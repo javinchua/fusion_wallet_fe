@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { Layout } from "../components";
 import { CurrencyInput } from "../components/CurrencyInput";
-import { getBalanceAPI, loanAPI } from "../utils/apis/api";
+import { getBalanceAPI, loanAPI, ethPriceAPI } from "../utils/apis/api";
 
 const Loan: NextPage = () => {
   const [depositAmount, setDepositAmount] = useState(0);
@@ -12,6 +12,7 @@ const Loan: NextPage = () => {
   const [ethBalance, setEthBalance] = useState(0);
   const [usdBalance, setUsdBalance] = useState(0);
   const [email, setEmail] = useState<string>();
+  const [ethPrice, setEthPrice] = useState<number>(0);
   useEffect(() => {
     const check = localStorage.getItem("email");
     if (check) {
@@ -24,6 +25,8 @@ const Loan: NextPage = () => {
       if (user_id) {
         const bal = await getBalanceAPI(user_id, "eth");
         const usdBal = await getBalanceAPI(user_id, "cash");
+        const ethPrice = await ethPriceAPI("ethereum");
+        setEthPrice(ethPrice);
         setEthBalance(bal);
         setUsdBalance(usdBal);
       }
@@ -32,16 +35,16 @@ const Loan: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    setCollateralAmount(depositAmount / 1000);
+    setCollateralAmount(depositAmount / ethPrice);
   }, [depositAmount]);
 
   useEffect(() => {
-    setDepositAmount(collateralAmount * 1000);
+    setDepositAmount(collateralAmount * ethPrice);
   }, [collateralAmount]);
   const handleLoan = async () => {
     const user_id = localStorage.getItem("user_id");
     if (user_id) {
-      const res = await loanAPI(user_id, depositAmount);
+      const res = await loanAPI(user_id, collateralAmount);
     }
   };
   return (
@@ -75,7 +78,7 @@ const Loan: NextPage = () => {
                 type="fiat"
                 amount={depositAmount}
                 setAmount={setDepositAmount}
-                balance={usdBalance.toFixed(2)}
+                balance={usdBalance}
               />
             </Grid>
             <Grid xs={2} justify="center" alignItems="center">
@@ -87,7 +90,7 @@ const Loan: NextPage = () => {
                 type="crypto"
                 amount={collateralAmount}
                 setAmount={setCollateralAmount}
-                balance={ethBalance.toFixed(2)}
+                balance={ethBalance}
               />
             </Grid>
             <Grid justify="center">
