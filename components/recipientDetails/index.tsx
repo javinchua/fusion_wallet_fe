@@ -12,7 +12,7 @@ export default function RecipientDetails(props: Props) {
   };
   return (
     <div className="grid place-items-center">
-      <h3>Enter Recipient's Details</h3>
+      <h3>Enter Recipient Details</h3>
       <input
         type="text"
         className="block w-64 p-3 mb-4 mr-3 border rounded border-grey-light"

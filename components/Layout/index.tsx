@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import { ReactNode } from "react";
-import { useAccount } from "wagmi";
 import { Navbar, Text, Button, Loading, Dropdown } from "@nextui-org/react";
 import { useRouter } from "next/router";
 
