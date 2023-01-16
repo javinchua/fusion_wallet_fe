@@ -53,7 +53,7 @@ const Account: NextPage = () => {
         handler={handler}
         reload={reload}
         setReload={setReload}
-        wallet={walletKey}
+        wallet={walletKey ? walletKey : ""}
       />
       <Transfer
         visible={visible}
