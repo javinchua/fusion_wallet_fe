@@ -131,6 +131,17 @@ const getUserFromEmailAPI = async (email: string) => {
     console.log(err);
   }
 };
+const loanAPI = async (user_id: string, amount: number) => {
+  try {
+    const res = await axios.post(
+      BACKEND_ROOT_URL + "/transactions/loan/" + amount + "?user_id=" + user_id
+    );
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 export {
   signupAPI,
   createWalletAPI,
@@ -142,4 +153,5 @@ export {
   retrieveWallet,
   ethPriceAPI,
   getUserFromEmailAPI,
+  loanAPI,
 };
