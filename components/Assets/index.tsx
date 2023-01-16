@@ -5,8 +5,9 @@ interface Props {
   handler: () => void;
   reload: boolean;
   setReload: (reload: boolean) => void;
+  wallet: string;
 }
-export const Asset = ({ handler, reload, setReload }: Props) => {
+export const Asset = ({ handler, reload, setReload, wallet }: Props) => {
   const [balance, setBalance] = useState({
     total: 0,
     eth: 0,
@@ -47,9 +48,11 @@ export const Asset = ({ handler, reload, setReload }: Props) => {
           <div className="flex justify-between w-full">
             <div className="flex flex-col text-xl">
               <Text b>Primary</Text>
-              <Text b>$ {balance.total.toFixed(2)} USD</Text>
+              <Text b>
+                $ {balance.total ? balance.total.toFixed(2) : 0} USD
+              </Text>
             </div>
-            <div>
+            <div className="my-auto">
               <Button size="sm" onClick={handler}>
                 Trade
               </Button>
@@ -57,6 +60,7 @@ export const Asset = ({ handler, reload, setReload }: Props) => {
           </div>
         </Card.Header>
         <Card.Divider />
+        <div className="mt-2 ml-3">Wallet Address: {wallet}</div>
         <Card.Body>
           <div className="flex flex-col">
             <div className="flex flex-row my-2 font-light">
@@ -89,7 +93,9 @@ export const Asset = ({ handler, reload, setReload }: Props) => {
                       css={{ p: 0 }}
                     ></User>
                   </Table.Cell>
-                  <Table.Cell>${balance.usd.toFixed(2)} USD</Table.Cell>
+                  <Table.Cell>
+                    ${balance.usd ? balance.usd.toFixed(2) : 0} USD
+                  </Table.Cell>
                   <Table.Cell>---</Table.Cell>
                 </Table.Row>
                 <Table.Row key="2">
@@ -101,8 +107,12 @@ export const Asset = ({ handler, reload, setReload }: Props) => {
                       css={{ p: 0 }}
                     ></User>
                   </Table.Cell>
-                  <Table.Cell>${balance.eth.toFixed(2)} USD</Table.Cell>
-                  <Table.Cell>{ethQuantity.toFixed(2)} ETH</Table.Cell>
+                  <Table.Cell>
+                    ${balance.eth ? balance.eth.toFixed(2) : 0} USD
+                  </Table.Cell>
+                  <Table.Cell>
+                    {ethQuantity ? ethQuantity.toFixed(2) : 0} ETH
+                  </Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>

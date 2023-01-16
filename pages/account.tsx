@@ -14,10 +14,13 @@ const Account: NextPage = () => {
   };
 
   const [email, setEmail] = useState<string>();
+  const [walletKey, setWalletKey] = useState<string>();
   useEffect(() => {
     const check = localStorage.getItem("email");
-    if (check) {
+    const check1 = localStorage.getItem("wallet_key");
+    if (check && check1) {
       setEmail(check);
+      setWalletKey(JSON.parse(check1).publicKey);
     }
   }, []);
   // const fetchEthPrice = async () => {
@@ -46,7 +49,12 @@ const Account: NextPage = () => {
         </Text>
         <Text b>Unleash the power of crypto and fiat.</Text>
       </div>
-      <Asset handler={handler} reload={reload} setReload={setReload} />
+      <Asset
+        handler={handler}
+        reload={reload}
+        setReload={setReload}
+        wallet={walletKey}
+      />
       <Transfer
         visible={visible}
         closeHandler={closeHandler}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { NextPage } from "next";
-import { signupAPI, createWalletAPI } from "../utils/apis/api";
+import { signupAPI, createWalletAPI, retrieveWallet } from "../utils/apis/api";
 import { Layout } from "../components";
 import { Button, Card, Input } from "@nextui-org/react";
 import Router from "next/router";
@@ -42,6 +42,7 @@ const Signup: NextPage = () => {
     const user_id = localStorage.getItem("user_id");
     if (user_id) {
       const res = await createWalletAPI(user_id);
+      const res1 = await retrieveWallet(user_id);
       Router.push("/account");
     }
   };
