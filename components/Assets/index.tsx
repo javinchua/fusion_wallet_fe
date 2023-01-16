@@ -1,6 +1,6 @@
 import { Button, Card, Text, Table, User } from "@nextui-org/react";
 import { useState, useEffect } from "react";
-import { getBalanceAPI } from "../../utils/apis/api";
+import { ethPriceAPI, getBalanceAPI } from "../../utils/apis/api";
 interface Props {
   handler: () => void;
 }
@@ -10,6 +10,7 @@ export const Asset = ({ handler }: Props) => {
     eth: 0,
     usd: 0,
   });
+  const [ethQuantity, setEthQuantity] = useState(0);
   useEffect(() => {
     const getBalances = async () => {
       const user_id = localStorage.getItem("user_id");
@@ -17,9 +18,12 @@ export const Asset = ({ handler }: Props) => {
         const ethBal = await getBalanceAPI(user_id, "eth");
         const usdBal = await getBalanceAPI(user_id, "cash");
         const totalBal = await getBalanceAPI(user_id, "all");
+        const ethPrice = await ethPriceAPI("ethereum");
+        localStorage.setItem("eth_price", ethPrice);
+        setEthQuantity(ethBal);
         setBalance({
           total: totalBal,
-          eth: ethBal,
+          eth: ethBal * ethPrice,
           usd: usdBal,
         });
       }
@@ -40,7 +44,7 @@ export const Asset = ({ handler }: Props) => {
           <div className="flex justify-between w-full">
             <div className="flex flex-col text-xl">
               <Text b>Primary</Text>
-              <Text b>$ {balance.total} USD</Text>
+              <Text b>$ {balance.total.toFixed(2)} USD</Text>
             </div>
             <div>
               <Button size="sm" onClick={handler}>
@@ -82,7 +86,7 @@ export const Asset = ({ handler }: Props) => {
                       css={{ p: 0 }}
                     ></User>
                   </Table.Cell>
-                  <Table.Cell>$0.01 USD</Table.Cell>
+                  <Table.Cell>${balance.usd.toFixed(2)} USD</Table.Cell>
                   <Table.Cell>---</Table.Cell>
                 </Table.Row>
                 <Table.Row key="2">
@@ -94,8 +98,8 @@ export const Asset = ({ handler }: Props) => {
                       css={{ p: 0 }}
                     ></User>
                   </Table.Cell>
-                  <Table.Cell>$9089 USD</Table.Cell>
-                  <Table.Cell>0.849 ETH</Table.Cell>
+                  <Table.Cell>${balance.eth.toFixed(2)} USD</Table.Cell>
+                  <Table.Cell>{ethQuantity.toFixed(2)} ETH</Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>

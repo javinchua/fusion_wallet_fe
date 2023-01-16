@@ -11,8 +11,13 @@ const Account: NextPage = () => {
     setVisible(false);
   };
 
-  const [wallet, setWallet] = useState();
-
+  const [email, setEmail] = useState<string>();
+  useEffect(() => {
+    const check = localStorage.getItem("email");
+    if (check) {
+      setEmail(check);
+    }
+  }, []);
   // const fetchEthPrice = async () => {
   //   const res = await axios.get(
   //     COIN_GECKO_URL + "/simple/price?ids=ethereum&vs_currencies=usd"
@@ -25,7 +30,7 @@ const Account: NextPage = () => {
   // }, []);
 
   return (
-    <Layout wallet_id={wallet}>
+    <Layout email={email}>
       <Asset handler={handler} />
       <Transfer visible={visible} closeHandler={closeHandler} />
     </Layout>

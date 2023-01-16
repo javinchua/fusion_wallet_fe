@@ -10,31 +10,32 @@ interface CurrencyInputProps {
   balance: number;
   width?: string;
   transfer?: boolean;
+  output?: boolean;
 }
 
-const currencyList = { fiat: ["SGD", "RIEL"], crypto: ["ETH", "USDC"] };
+const currencyList = { fiat: ["USD", "RIEL"], crypto: ["ETH", "USDC"] };
 
 export const CurrencyInput = (props: CurrencyInputProps) => {
   const list = currencyList[props.type];
   const [currency, setCurrency] = useState(new Set([list[0]]));
   const [balance, setBalance] = useState({
-    eth: 10,
-    usd: 100,
+    eth: 0,
+    usd: 0,
   });
-  // useEffect(() => {
-  //   const getBalances = async () => {
-  //     const user_id = localStorage.getItem("user_id");
-  //     if (user_id) {
-  //       const ethBal = await getBalanceAPI(user_id, "eth");
-  //       const usdBal = await getBalanceAPI(user_id, "cash");
-  //       setBalance({
-  //         eth: ethBal,
-  //         usd: usdBal,
-  //       });
-  //     }
-  //   };
-  //   getBalances();
-  // }, []);
+  useEffect(() => {
+    const getBalances = async () => {
+      const user_id = localStorage.getItem("user_id");
+      if (user_id) {
+        const ethBal = await getBalanceAPI(user_id, "eth");
+        const usdBal = await getBalanceAPI(user_id, "cash");
+        setBalance({
+          eth: ethBal,
+          usd: usdBal,
+        });
+      }
+    };
+    getBalances();
+  }, []);
   const helperText = props.transfer
     ? currency.values().next().value == "ETH"
       ? balance.eth
@@ -64,14 +65,18 @@ export const CurrencyInput = (props: CurrencyInputProps) => {
     );
   };
   return (
-    <Input
-      width={props.width ? props.width : ""}
-      type="number"
-      contentRight={<CurrencyDropdown />}
-      label={props.label}
-      value={props.amount !== 0 ? props.amount : ""}
-      onChange={(e) => props.setAmount(parseFloat(e.target.value))}
-      helperText={`Balance: ${helperText}`}
-    />
+    <div className="flex flex-col">
+      <Input
+        width={props.width ? props.width : ""}
+        type="number"
+        contentRight={<CurrencyDropdown />}
+        label={props.label}
+        value={props.amount !== 0 ? props.amount.toFixed(2) : ""}
+        onChange={(e) => props.setAmount(parseFloat(e.target.value))}
+      />
+      {props.output ? null : (
+        <div className="text-sm font-light">Balance: {helperText}</div>
+      )}
+    </div>
   );
 };

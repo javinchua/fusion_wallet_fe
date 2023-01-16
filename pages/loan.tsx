@@ -47,7 +47,7 @@ const Loan: NextPage = () => {
       </div>
       <Card
         css={{
-          mw: "60%",
+          mw: "90%",
           marginTop: "4rem",
           marginLeft: "auto",
           marginRight: "auto",
