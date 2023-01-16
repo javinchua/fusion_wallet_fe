@@ -1,12 +1,16 @@
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import { Button, Card, Grid, Text } from "@nextui-org/react";
+import { Button, Card, Grid, Text, Loading } from "@nextui-org/react";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { Layout } from "../components";
 import { CurrencyInput } from "../components/CurrencyInput";
 import { getBalanceAPI, loanAPI, ethPriceAPI } from "../utils/apis/api";
+import { SuccessModal } from "../components/SuccessModal";
+import Router from "next/router";
 
 const Loan: NextPage = () => {
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [depositAmount, setDepositAmount] = useState(0);
   const [collateralAmount, setCollateralAmount] = useState(0);
   const [ethBalance, setEthBalance] = useState(0);
@@ -43,9 +47,16 @@ const Loan: NextPage = () => {
   }, [collateralAmount]);
   const handleLoan = async () => {
     const user_id = localStorage.getItem("user_id");
+    setLoading(true);
     if (user_id) {
       const res = await loanAPI(user_id, collateralAmount);
+      setLoading(false);
+      setShowSuccess(true);
     }
+  };
+  const closeRedirect = () => {
+    setShowSuccess(false);
+    Router.push("/account");
   };
   return (
     <Layout email={email}>
@@ -95,12 +106,21 @@ const Loan: NextPage = () => {
             </Grid>
             <Grid justify="center">
               <Button color="success" onPress={() => handleLoan()}>
-                Borrow Now
+                {loading ? (
+                  <Loading color="currentColor" size="sm" />
+                ) : (
+                  <div>Borrow Now</div>
+                )}
               </Button>
             </Grid>
           </Grid.Container>
         </Card.Body>
       </Card>
+      <SuccessModal
+        message="Transfer has been successfully made!"
+        visible={showSuccess}
+        closeHandler={() => closeRedirect()}
+      />
     </Layout>
   );
 };

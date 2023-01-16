@@ -5,6 +5,7 @@ import { Asset } from "../components/Assets";
 import { Transfer } from "../components/Transfer";
 const Account: NextPage = () => {
   const [visible, setVisible] = useState(false);
+  const [reload, setReload] = useState(true);
   const handler = () => setVisible(true);
 
   const closeHandler = () => {
@@ -31,8 +32,12 @@ const Account: NextPage = () => {
 
   return (
     <Layout email={email}>
-      <Asset handler={handler} />
-      <Transfer visible={visible} closeHandler={closeHandler} />
+      <Asset handler={handler} reload={reload} setReload={setReload} />
+      <Transfer
+        visible={visible}
+        closeHandler={closeHandler}
+        setReload={setReload}
+      />
     </Layout>
   );
 };
