@@ -98,6 +98,17 @@ const transferAPI = async (
     console.log(err);
   }
 };
+const retrieveWallet = async (user_id: string) => {
+  try {
+    const res = await axios.get(
+      BACKEND_ROOT_URL + "/wallets/retrieveAll/" + user_id
+    );
+    localStorage.setItem("wallet_key", JSON.stringify(res.data[0]));
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 export {
   signupAPI,
   createWalletAPI,
@@ -106,4 +117,5 @@ export {
   getTransLogsAPI,
   getBalanceAPI,
   transferAPI,
+  retrieveWallet,
 };
