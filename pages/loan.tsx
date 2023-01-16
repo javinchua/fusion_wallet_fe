@@ -38,13 +38,16 @@ const Loan: NextPage = () => {
     getEthBalance();
   }, []);
 
-  useEffect(() => {
-    setCollateralAmount(depositAmount / ethPrice);
-  }, [depositAmount]);
+  const handleDepositInput = (val: number) => {
+    setDepositAmount(val);
+    setCollateralAmount(val / (ethPrice * 2));
+  };
 
-  useEffect(() => {
-    setDepositAmount(collateralAmount * ethPrice);
-  }, [collateralAmount]);
+  const handleCollateralInput = (val: number) => {
+    setDepositAmount((val * ethPrice) / 2.0);
+    setCollateralAmount(val);
+  };
+
   const handleLoan = async () => {
     const user_id = localStorage.getItem("user_id");
     setLoading(true);
@@ -88,19 +91,25 @@ const Loan: NextPage = () => {
                 label="Credit Amount"
                 type="fiat"
                 amount={depositAmount}
-                setAmount={setDepositAmount}
+                setAmount={handleDepositInput}
                 balance={usdBalance}
               />
             </Grid>
-            <Grid xs={2} justify="center" alignItems="center">
+            <Grid
+              xs={2}
+              justify="flex-end"
+              alignItems="center"
+              direction="column"
+            >
               <SwapHorizIcon fontSize="large" />
+              <Text>50% LTV</Text>
             </Grid>
             <Grid xs={5} justify="flex-start">
               <CurrencyInput
                 label="Collateral Required"
                 type="crypto"
                 amount={collateralAmount}
-                setAmount={setCollateralAmount}
+                setAmount={handleCollateralInput}
                 balance={ethBalance}
               />
             </Grid>

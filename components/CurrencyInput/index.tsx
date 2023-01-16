@@ -6,7 +6,7 @@ interface CurrencyInputProps {
   label: string;
   type: "fiat" | "crypto";
   amount: number;
-  setAmount: Dispatch<SetStateAction<number>>;
+  setAmount: (val: number) => void;
   balance: number;
   width?: string;
   transfer?: boolean;
