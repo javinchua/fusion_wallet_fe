@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import { ReactNode } from "react";
-import { WalletOptionsModal } from "..";
 import { useAccount } from "wagmi";
 import { Navbar, Text, Button, Loading, Dropdown } from "@nextui-org/react";
 import { useRouter } from "next/router";
@@ -66,11 +65,6 @@ export default function Layout(props: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      {/* <WalletOptionsModal
-        open={showWalletOptions}
-        setOpen={setShowWalletOptions}
-      /> */}
 
       <Navbar>
         <Navbar.Brand>
