@@ -72,8 +72,10 @@ export const CurrencyInput = (props: CurrencyInputProps) => {
         type="number"
         contentRight={<CurrencyDropdown />}
         label={props.label}
-        value={props.amount !== 0 ? props.amount : ""}
-        onChange={(e) => props.setAmount(parseFloat(e.target.value))}
+        value={props.amount}
+        onChange={(e) => {
+          props.setAmount(parseFloat(e.target.value));
+        }}
       />
       {props.output ? null : (
         <div className="text-sm font-light">Balance: {helperText}</div>

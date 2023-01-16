@@ -11,8 +11,8 @@ import Router from "next/router";
 const Loan: NextPage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [depositAmount, setDepositAmount] = useState(0);
-  const [collateralAmount, setCollateralAmount] = useState(0);
+  const [depositAmount, setDepositAmount] = useState("");
+  const [collateralAmount, setCollateralAmount] = useState("");
   const [ethBalance, setEthBalance] = useState(0);
   const [usdBalance, setUsdBalance] = useState(0);
   const [email, setEmail] = useState<string>();
