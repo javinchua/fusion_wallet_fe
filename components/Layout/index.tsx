@@ -74,9 +74,9 @@ export default function Layout(props: Props) {
 
       <Navbar>
         <Navbar.Brand>
-          <Text b color="inherit" hideIn="xs">
-            Fusion Wallet
-          </Text>
+          <div className="ml-12">
+            <Image src="/icon.png" width={60} height={60} alt="Fusion Wallet" />
+          </div>
         </Navbar.Brand>
         <Navbar.Content hideIn="xs">
           {pathname !== "/" && pathname !== "/signup" && (

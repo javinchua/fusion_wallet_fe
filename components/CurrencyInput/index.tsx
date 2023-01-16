@@ -55,7 +55,8 @@ export const CurrencyInput = (props: CurrencyInputProps) => {
           selectionMode="single"
           defaultSelectedKeys={currency}
           selectedKeys={currency}
-          onSelectionChange={setCurrency}
+          onAction={(key) => setCurrency(new Set([key.toString()]))}
+          disabledKeys={list.slice(1)}
         >
           {list.map((currency) => {
             return <Dropdown.Item key={currency}>{currency}</Dropdown.Item>;

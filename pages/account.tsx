@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { Button, Layout } from "../components";
 import { Asset } from "../components/Assets";
 import { Transfer } from "../components/Transfer";
+import { Text } from "@nextui-org/react";
 const Account: NextPage = () => {
   const [visible, setVisible] = useState(false);
   const handler = () => setVisible(true);
@@ -31,6 +32,19 @@ const Account: NextPage = () => {
 
   return (
     <Layout email={email}>
+      <div className="mt-8 text-center">
+        <Text
+          h1
+          size={60}
+          css={{
+            textGradient: "45deg, $yellow600 -20%, $red600 100%",
+          }}
+          weight="bold"
+        >
+          All-in-one Bank Account
+        </Text>
+        <Text b>Unleash the power of crypto and fiat.</Text>
+      </div>
       <Asset handler={handler} />
       <Transfer visible={visible} closeHandler={closeHandler} />
     </Layout>
