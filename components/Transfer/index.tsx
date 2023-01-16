@@ -1,4 +1,4 @@
-import { Modal, Button, Text, Input, Grid } from "@nextui-org/react";
+import { Modal, Button, Text, Input, Grid, Loading } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { CurrencyInput } from "../CurrencyInput";
 import {
@@ -7,12 +7,16 @@ import {
   getUserFromEmailAPI,
 } from "../../utils/apis/api";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { SuccessModal } from "../SuccessModal";
 
 interface Props {
   visible: boolean;
   closeHandler: () => void;
+  setReload: (reload: boolean) => void;
 }
-export const Transfer = ({ visible, closeHandler }: Props) => {
+export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
+  const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [step, setStep] = useState<number>(0);
   const [targetUser, setTargetUser] = useState();
   const [depositAmount, setDepositAmount] = useState<number>(0);
@@ -34,10 +38,13 @@ export const Transfer = ({ visible, closeHandler }: Props) => {
   }, [outputAmount]);
   const handleTransfer = async () => {
     const user = localStorage.getItem("user_id");
-    console.log(user);
     if (user && targetUser) {
+      setLoading(true);
       await transferAPI(user, targetUser, depositAmount);
+      setLoading(false);
       closeHandler();
+      setShowSuccess(true);
+      setReload(true);
     }
   };
   const handleUser = (e: any) => {
@@ -130,8 +137,13 @@ export const Transfer = ({ visible, closeHandler }: Props) => {
                     className="my-3"
                     auto
                     onPress={() => handleTransfer()}
+                    disabled={loading}
                   >
-                    Transfer
+                    {loading ? (
+                      <Loading color="currentColor" size="sm" />
+                    ) : (
+                      <div>Transfer</div>
+                    )}
                   </Button>
                 </Grid>
               </Grid.Container>
@@ -139,6 +151,11 @@ export const Transfer = ({ visible, closeHandler }: Props) => {
           </>
         )}
       </Modal>
+      <SuccessModal
+        message="Transfer has been successfully made!"
+        visible={showSuccess}
+        closeHandler={() => setShowSuccess(false)}
+      />
     </div>
   );
 };

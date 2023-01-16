@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import { ethPriceAPI, getBalanceAPI } from "../../utils/apis/api";
 interface Props {
   handler: () => void;
+  reload: boolean;
+  setReload: (reload: boolean) => void;
 }
-export const Asset = ({ handler }: Props) => {
+export const Asset = ({ handler, reload, setReload }: Props) => {
   const [balance, setBalance] = useState({
     total: 0,
     eth: 0,
@@ -14,7 +16,7 @@ export const Asset = ({ handler }: Props) => {
   useEffect(() => {
     const getBalances = async () => {
       const user_id = localStorage.getItem("user_id");
-      if (user_id) {
+      if (user_id && reload) {
         const ethBal = await getBalanceAPI(user_id, "eth");
         const usdBal = await getBalanceAPI(user_id, "cash");
         const totalBal = await getBalanceAPI(user_id, "all");
@@ -26,10 +28,11 @@ export const Asset = ({ handler }: Props) => {
           eth: ethBal * ethPrice,
           usd: usdBal,
         });
+        setReload(false);
       }
     };
     getBalances();
-  }, []);
+  }, [reload]);
   return (
     <div>
       <Card

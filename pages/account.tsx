@@ -6,6 +6,7 @@ import { Transfer } from "../components/Transfer";
 import { Text } from "@nextui-org/react";
 const Account: NextPage = () => {
   const [visible, setVisible] = useState(false);
+  const [reload, setReload] = useState(true);
   const handler = () => setVisible(true);
 
   const closeHandler = () => {
@@ -45,8 +46,12 @@ const Account: NextPage = () => {
         </Text>
         <Text b>Unleash the power of crypto and fiat.</Text>
       </div>
-      <Asset handler={handler} />
-      <Transfer visible={visible} closeHandler={closeHandler} />
+      <Asset handler={handler} reload={reload} setReload={setReload} />
+      <Transfer
+        visible={visible}
+        closeHandler={closeHandler}
+        setReload={setReload}
+      />
     </Layout>
   );
 };
