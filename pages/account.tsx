@@ -4,15 +4,21 @@ import { Button, Layout } from "../components";
 import { Asset } from "../components/Assets";
 import { Transfer } from "../components/Transfer";
 import { Text } from "@nextui-org/react";
+import { QRCode } from "../components/QRCode";
 const Account: NextPage = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [qrCodeVisible, setQrCodeVisible] = useState<boolean>(false);
   const [reload, setReload] = useState(true);
   const handler = () => setVisible(true);
-
+  const openQrCode = () => {
+    setQrCodeVisible(true);
+  };
   const closeHandler = () => {
     setVisible(false);
   };
-
+  const closeQrCode = () => {
+    setQrCodeVisible(false);
+  };
   const [email, setEmail] = useState<string>();
   const [walletKey, setWalletKey] = useState<string>();
   useEffect(() => {
@@ -23,16 +29,6 @@ const Account: NextPage = () => {
       setWalletKey(JSON.parse(check1).publicKey);
     }
   }, []);
-  // const fetchEthPrice = async () => {
-  //   const res = await axios.get(
-  //     COIN_GECKO_URL + "/simple/price?ids=ethereum&vs_currencies=usd"
-  //   );
-  //   const price = res.data.ethereum.usd;
-  //   setEthPrice(price);
-  // };
-  // useEffect(() => {
-  //   fetchEthPrice();
-  // }, []);
 
   return (
     <Layout email={email}>
@@ -54,11 +50,17 @@ const Account: NextPage = () => {
         reload={reload}
         setReload={setReload}
         wallet={walletKey ? walletKey : ""}
+        openQr={openQrCode}
       />
       <Transfer
         visible={visible}
         closeHandler={closeHandler}
         setReload={setReload}
+      />
+      <QRCode
+        visible={qrCodeVisible}
+        closeHandler={closeQrCode}
+        email={email || ""}
       />
     </Layout>
   );

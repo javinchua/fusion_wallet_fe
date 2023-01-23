@@ -8,7 +8,7 @@ import {
 } from "../../utils/apis/api";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { SuccessModal } from "../SuccessModal";
-
+import { QRScanner } from "../QRScanner";
 interface Props {
   visible: boolean;
   closeHandler: () => void;
@@ -80,6 +80,7 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
               </Text>
             </Modal.Header>
             <Modal.Body>
+              <QRScanner />
               <Input
                 clearable
                 bordered

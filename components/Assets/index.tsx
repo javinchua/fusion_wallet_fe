@@ -3,11 +3,18 @@ import { useState, useEffect } from "react";
 import { ethPriceAPI, getBalanceAPI } from "../../utils/apis/api";
 interface Props {
   handler: () => void;
+  openQr: () => void;
   reload: boolean;
   setReload: (reload: boolean) => void;
   wallet: string;
 }
-export const Asset = ({ handler, reload, setReload, wallet }: Props) => {
+export const Asset = ({
+  handler,
+  reload,
+  setReload,
+  wallet,
+  openQr,
+}: Props) => {
   const [balance, setBalance] = useState({
     total: 0,
     eth: 0,
@@ -52,9 +59,12 @@ export const Asset = ({ handler, reload, setReload, wallet }: Props) => {
                 $ {balance.total ? balance.total.toFixed(2) : 0} USD
               </Text>
             </div>
-            <div className="my-auto">
-              <Button size="sm" onClick={handler}>
+            <div className="flex flex-row my-auto">
+              <Button size="xs" onClick={handler}>
                 Trade
+              </Button>
+              <Button size="xs" onClick={openQr} className="ml-2">
+                MY QR
               </Button>
             </div>
           </div>
