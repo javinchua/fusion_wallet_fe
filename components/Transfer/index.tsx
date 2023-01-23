@@ -18,11 +18,13 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [step, setStep] = useState<number>(0);
-  const [targetUser, setTargetUser] = useState();
+  const [targetUser, setTargetUser] = useState<string>();
   const [depositAmount, setDepositAmount] = useState<number>(0);
   const [ethPrice, setEthPrice] = useState<number>(0);
   const [outputAmount, setOutputAmount] = useState<number>(0);
   const [targetUserName, setTargetUserName] = useState("");
+  const [qrScanner, setQrScanner] = useState<boolean>(false);
+
   useEffect(() => {
     const getBalances = async () => {
       const ethPrice = await ethPriceAPI("ethereum");
@@ -59,6 +61,10 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
       setStep(1);
     }
   };
+  const onResult = (email: string) => {
+    setQrScanner(false);
+    setTargetUser(email);
+  };
   return (
     <div>
       <Modal
@@ -80,7 +86,15 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
               </Text>
             </Modal.Header>
             <Modal.Body>
-              <QRScanner />
+              {qrScanner ? (
+                <QRScanner onResult={onResult} />
+              ) : (
+                <div className="w-24 mx-auto">
+                  <Button size="sm" onClickCapture={() => setQrScanner(true)}>
+                    Scan QR Code
+                  </Button>
+                </div>
+              )}
               <Input
                 clearable
                 bordered
