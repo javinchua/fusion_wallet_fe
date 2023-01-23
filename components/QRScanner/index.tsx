@@ -6,7 +6,7 @@ export const QRScanner = ({}) => {
     <QrReader
       onResult={(result, error) => {
         if (!!result) {
-          alert(result?.text);
+          alert(result?.getText());
         }
 
         if (!!error) {
@@ -16,7 +16,7 @@ export const QRScanner = ({}) => {
       //this is facing mode : "environment " it will open backcamera of the smartphone and if not found will
       // open the front camera
       constraints={{ facingMode: "environment" }}
-      style={{ width: "40%", height: "40%" }}
+      //   style={{ width: "40%", height: "40%" }}
     />
   );
 };
