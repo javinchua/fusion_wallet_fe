@@ -8,6 +8,7 @@ export interface SignUp {
   lastName: string;
   password: string;
 }
+
 const signupAPI = async (data: SignUp) => {
   try {
     const res = await axios.post(BACKEND_ROOT_URL + "/users/create", data);

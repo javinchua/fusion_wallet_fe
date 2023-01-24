@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import { signupAPI, createWalletAPI, retrieveWallet } from "../utils/apis/api";
 import { Layout } from "../components";
-import { Button, Card, Input } from "@nextui-org/react";
+import { Button, Card, Input, Link } from "@nextui-org/react";
 import Router from "next/router";
 export interface SignUp {
   username: string;
@@ -124,6 +124,14 @@ const Signup: NextPage = () => {
             </Button>
           </form>
         </Card.Body>
+        <Card.Footer>
+          <div className="flex flex-row mx-auto">
+            <div>Already a user? &nbsp;</div>
+            <Link color="primary" target="_blank" href="/login">
+              Login here!
+            </Link>
+          </div>
+        </Card.Footer>
       </Card>
     </Layout>
   );

@@ -72,16 +72,18 @@ export default function Layout(props: Props) {
           </div>
         </Navbar.Brand>
         <Navbar.Content hideIn="xs">
-          {pathname !== "/" && pathname !== "/signup" && (
-            <>
-              <Navbar.Link isActive={pathname == "/account"} href="/account">
-                Account: {props.email}
-              </Navbar.Link>
-              <Navbar.Link isActive={pathname == "/loan"} href="/loan">
-                Loans
-              </Navbar.Link>
-            </>
-          )}
+          {pathname !== "/" &&
+            pathname !== "/signup" &&
+            pathname !== "/login" && (
+              <>
+                <Navbar.Link isActive={pathname == "/account"} href="/account">
+                  Account: {props.email}
+                </Navbar.Link>
+                <Navbar.Link isActive={pathname == "/loan"} href="/loan">
+                  Loans
+                </Navbar.Link>
+              </>
+            )}
         </Navbar.Content>
         {/* <Navbar.Content>{renderButton()}</Navbar.Content> */}
       </Navbar>
