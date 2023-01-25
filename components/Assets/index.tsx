@@ -75,7 +75,7 @@ export const Asset = ({
         </div>
         <Card.Body>
           <div className="flex flex-col">
-            <div className="flex flex-row my-2 font-light">
+            <div className="flex flex-row my-2 text-sm font-light md:text-base">
               <div className="mx-2 font-bold underline underline-offset-8 decoration-teal-400">
                 Balances
               </div>
