@@ -70,7 +70,9 @@ export const Asset = ({
           </div>
         </Card.Header>
         <Card.Divider />
-        <div className="mt-2 ml-3">Wallet Address: {wallet}</div>
+        <div className="mt-2 ml-3 text-xs md:text-base">
+          Wallet Address: {wallet}
+        </div>
         <Card.Body>
           <div className="flex flex-col">
             <div className="flex flex-row my-2 font-light">
