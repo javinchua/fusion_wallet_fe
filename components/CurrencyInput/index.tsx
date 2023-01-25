@@ -66,9 +66,8 @@ export const CurrencyInput = (props: CurrencyInputProps) => {
     );
   };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col md:w-[450px] w-[180px] md:mr-0 mr-9">
       <Input
-        width={props.width ? props.width : ""}
         type="number"
         contentRight={<CurrencyDropdown />}
         label={props.label}

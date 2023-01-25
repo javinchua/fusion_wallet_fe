@@ -73,7 +73,7 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
         aria-labelledby="modal-title"
         open={visible}
         onClose={closeHandler}
-        width="600px"
+        width="80%"
       >
         {step == 0 ? (
           <>
