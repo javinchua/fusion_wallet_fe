@@ -32,12 +32,17 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
     };
     getBalances();
   }, []);
-  useEffect(() => {
-    setOutputAmount(ethPrice * depositAmount);
-  }, [depositAmount]);
-  useEffect(() => {
-    setDepositAmount(outputAmount / ethPrice);
-  }, [outputAmount]);
+
+  const handleOutputInput = (val: number) => {
+    setOutputAmount(val);
+    setDepositAmount(val / ethPrice);
+  };
+
+  const handleDepositInput = (val: number) => {
+    setDepositAmount(val);
+    setOutputAmount(ethPrice * val);
+  };
+
   const handleTransfer = async () => {
     const user = localStorage.getItem("user_id");
     if (user && targetUser) {
@@ -129,7 +134,7 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
                     label="Transfer Amount"
                     type="crypto"
                     amount={depositAmount}
-                    setAmount={setDepositAmount}
+                    setAmount={handleDepositInput}
                     balance={0}
                   />
                 </Grid>
@@ -143,7 +148,7 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
                     type="fiat"
                     width={"400px"}
                     amount={outputAmount}
-                    setAmount={setOutputAmount}
+                    setAmount={handleOutputInput}
                     balance={0}
                   />
                 </Grid>
