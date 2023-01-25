@@ -78,7 +78,7 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
         aria-labelledby="modal-title"
         open={visible}
         onClose={closeHandler}
-        width="600px"
+        width="80%"
       >
         {step == 0 ? (
           <>
@@ -94,7 +94,7 @@ export const Transfer = ({ visible, closeHandler, setReload }: Props) => {
               {qrScanner ? (
                 <QRScanner onResult={onResult} />
               ) : (
-                <div className="w-24 mx-auto">
+                <div className="flex mx-auto">
                   <Button size="sm" onClickCapture={() => setQrScanner(true)}>
                     Scan QR Code
                   </Button>

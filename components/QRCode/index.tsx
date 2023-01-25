@@ -30,7 +30,7 @@ export const QRCode = ({ visible, closeHandler, email }: Props) => {
           </Modal.Header>
           <Modal.Body>
             <Text size={18} className="mx-auto">
-              Scan or share QR code to receive payments
+              Scan QR code to receive payments
             </Text>
             <div className="mx-auto">
               <Canvas
